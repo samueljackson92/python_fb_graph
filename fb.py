@@ -1,5 +1,7 @@
 import requests
+from requests.exceptions import HTTPError
 import json
+from sys import exit
 from getpass import getpass
 
 #Location of the foauth API
@@ -23,8 +25,14 @@ def auth():
 
 #query the facebook API via foauth
 def query(query):
-	request = requests.get(FOAUTH_FB_API + query, auth=AUTH)
-	return request
+	try:
+		request = requests.get(FOAUTH_FB_API + query, auth=AUTH)
+	   	r.raise_for_status()
+	except HTTPError:
+		print "Failed to get response from Facebook server."
+		exit(-1)
+	else:
+		return request
 
 #convert the data returned to JSON
 def queryJSON(url):

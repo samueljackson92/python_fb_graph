@@ -57,18 +57,20 @@ if __name__ == "__main__":
 	print "\n\nAverage Number of Mutual Friends: 	%s" % average_mutual
 	print "Max Number of Mutual Friends:		%s" % max_mutual
 
-	######################
-	## Outputting to file
-	######################
+	################################################
+	## Outputting to file --------------------------
+	################################################
 
-	stroutput = '<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz"><graph mode="static" defaultedgetype="undirected"><nodes>\n'
+	#Create string buffer for large output
+	strBuff = []
+	strBuff.append('<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz"><graph mode="static" defaultedgetype="undirected"><nodes>\n')
 
 	#output nodes
 	for i, n in fg.nodes.iteritems():
-		stroutput += '<node id="' + n.data["id"] + '" label="'+ n.data["name"]+'" />\n'
+		strBuff.append('<node id="' + n.data["id"] + '" label="'+ n.data["name"]+'" />\n')
 
-	stroutput += '</nodes>\n'
-	stroutput += '<edges>\n'
+	strBuff.append('</nodes>\n')
+	strBuff.append('<edges>\n')
 
 	#output edges
 	count = 0
@@ -77,16 +79,19 @@ if __name__ == "__main__":
 			color = {'r': "0", 'g': "0", 'b': "0"}
 		else:
 			color = {'r': "59", 'g': "89", 'b': "152"}
+
 		for adjacent in n.adjacents:
 			count += 1
-			stroutput += '<edge id="'+str(count)+'" source="'+n.data['id']+'" target="'+adjacent.data['id']+'">'
-			stroutput += '<viz:color r="'+color['r']+'" g="'+color['g']+'" b="'+color['b']+'"/>'
-			stroutput +='</edge>'
+			strBuff.append('<edge id="'+str(count)+'" source="'+n.data['id']+'" target="'+adjacent.data['id']+'">')
+			strBuff.append('<viz:color r="'+color['r']+'" g="'+color['g']+'" b="'+color['b']+'"/>')
+			strBuff.append('</edge>')
 
-	stroutput += '</edges></graph></gexf>\n'
+	strBuff.append('</edges></graph></gexf>\n')
 
-	stroutput = stroutput.decode("utf-8")
+	#handle any unicode characters in names.
+	outputstr = ''.join(strBuff)
+	outputstr = outputstr.decode("utf-8")
 
 	f = open("output.gexf", 'w')
-	f.write(stroutput)
+	f.write(outputstr)
 	f.close()
