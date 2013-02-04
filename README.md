@@ -3,6 +3,7 @@ Gephi Facebook Graph
 
 Creates a graph of your Facebook friends and exports it to a Gephi readable XML file.
 Connects to Facebook using the oauth service provided by foauth (https://foauth.org/).
+You'll need to make a foauth account in order to use it.
 
 Usage
 -----
