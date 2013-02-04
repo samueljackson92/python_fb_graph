@@ -1,5 +1,5 @@
 #!/usr/bin/python2.7
-import fb_auth
+import fb
 from simple_graph import *
 from bcolors import bcolors
 
@@ -9,8 +9,8 @@ if __name__ == "__main__":
 	fb_auth.auth()
 
 	#Get Profile and Friends list
-	profile = fb_auth.queryJSON('me')
-	friends = fb_auth.queryJSON('me/friends')
+	profile = fb.queryJSON('me')
+	friends = fb.queryJSON('me/friends')
 	friends = friends['data']
 
 	#Create graph of the data
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 			#get list of mutual friends
 			print "Examining: ", f['name']
-			mutualfriends = fb_auth.queryJSON(f['id']+"/mutualfriends")
+			mutualfriends = fb.queryJSON(f['id']+"/mutualfriends")
 
 			#check if they have the most mutual friends
 			mcount = len(mutualfriends['data'])
