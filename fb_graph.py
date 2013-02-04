@@ -6,7 +6,7 @@ from bcolors import bcolors
 if __name__ == "__main__":
 
 	#Collect Username and Password
-	fb_auth.auth()
+	fb.auth()
 
 	#Get Profile and Friends list
 	profile = fb.queryJSON('me')

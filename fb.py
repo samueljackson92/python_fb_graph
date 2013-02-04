@@ -27,7 +27,7 @@ def auth():
 def query(query):
 	try:
 		request = requests.get(FOAUTH_FB_API + query, auth=AUTH)
-	   	r.raise_for_status()
+	   	request.raise_for_status()
 	except HTTPError:
 		print "Failed to get response from Facebook server."
 		exit(-1)
